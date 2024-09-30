@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Landing Page</title>
+    <link rel="stylesheet" href="styles1.css">
+
+    <style type="text/css">
+        /* Background for the body */
+        body {
+            background-image: url('house4.jpeg'); /* Replace with your background image */
+            background-size: cover; /* Ensures the image covers the whole background */
+            background-attachment: fixed; /* The background stays fixed when scrolling */
+            background-position: center; /* Centers the background image */
+            font-family: Arial, sans-serif; /* A clean default font */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Logo Animation */
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-125deg);
+            }
+        }
+
+        .logo {
+            width: 150px; /* Placeholder width for logo */
+            height: auto; /* Maintain aspect ratio */
+            animation: rotate 2s linear infinite; /* Apply rotation animation */
+        }
+
+        /* Default background for headings */
+        header h1,
+        section h2 {
+            background-color: #87CEEB; /* SkyBlue background applied by default */
+            padding: 10px; /* Padding for better visibility */
+            display: inline-block; /* Ensures the background wraps around the text */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition effect for any future changes */
+        }
+
+        /* Header Styles */
+        header {
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Space between logo and navigation */
+            padding: 20px; /* Padding for header */
+            background-color: rgba(255, 255, 255, 0.9); /* Light background for header with transparency */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+        }
+
+        nav {
+            display: flex; /* Flexbox for navigation items */
+            gap: 20px; /* Space between navigation items */
+        }
+
+        nav a {
+            text-decoration: none; /* Remove underline */
+            color: #5f9ea0; /* Text color */
+            font-weight: bold; /* Bold text */
+            transition: color 0.3s ease; /* Smooth transition for color change */
+        }
+
+        nav a:hover {
+            color: #4682b4; /* Change to SteelBlue on hover */
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: white; /* White background */
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888; /* Gray border */
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 5px; /* Rounded corners */
+        }
+
+        .close-button {
+            color: #aaa; /* Gray color */
+            float: right; /* Right align */
+            font-size: 28px; /* Font size */
+            font-weight: bold; /* Bold text */
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black; /* Change color on hover */
+            text-decoration: none; /* No underline */
+            cursor: pointer; /* Pointer cursor */
+        }
+
+        /* Common styles for input fields */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        textarea {
+            width: 100%; /* Full width for inputs */
+            padding: 12px; /* Padding for comfort */
+            margin: 8px 0; /* Space between inputs */
+            border: 1px solid #b0c4de; /* LightSteelBlue border */
+            border-radius: 5px; /* Rounded corners */
+            box-sizing: border-box; /* Ensures padding is included in width */
+            font-size: 16px; /* Font size for readability */
+            transition: border-color 0.3s ease; /* Smooth transition for border color */
+        }
+
+        /* Change border color on focus */
+        input:focus,
+        textarea:focus {
+            border-color: #4682b4; /* SteelBlue border on focus */
+            outline: none; /* Remove default outline */
+        }
+
+        /* Styles for the buttons */
+        button {
+            width: 100%; /* Full width for buttons */
+            background-color: #5f9ea0; /* CadetBlue background */
+            color: white; /* Text color */
+            padding: 12px; /* Padding for buttons */
+            margin-top: 10px; /* Space above button */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 18px; /* Font size */
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
+        }
+
+        /* Button hover effect */
+        button:hover {
+            background-color: #4682b4; /* Change to SteelBlue on hover */
+        }
+
+        /* Additional styles for the textarea */
+        textarea {
+            height: 100px; /* Set a height for the textarea */
+            resize: vertical; /* Allow vertical resizing */
+        }
+
+        /* Moving Title Animation */
+        .animated-title {
+            position: relative; /* Allows the text to move relative to its normal position */
+            animation: moveSideways 2s infinite linear; /* Applies the animation */
+        }
+
+        @keyframes moveSideways {
+            0% {
+                left: 0; /* Starting position */
+            }
+            50% {
+                left: 50px; /* Midway position */
+            }
+            100% {
+                left: 0; /* End position, returns to the start */
+            }
+        }
+
+        /* Property Cards */
+        .property-list {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .property {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .property:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .property img {
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .property h3 {
+            margin: 10px 0 5px;
+            font-size: 20px;
+        }
+
+        .property p {
+            color: #4682b4;
+            font-weight: bold;
+        }
+    </style>
+
+    <style type="text/css">
+
+/* Media query for tablets (768px - 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+    header, nav, .property-list, .contact form, .about, .testimonials {
+        flex-direction: column; /* Stack elements vertically */
+        text-align: center; /* Center text */
+    }
+
+    nav a {
+        padding: 10px 0; /* Add more space between navigation links */
+        font-size: 1.2em; /* Increase font size for better readability */
+    }
+
+    .property-list {
+        flex-wrap: wrap; /* Wrap property cards to fit smaller screen */
+        justify-content: center;
+    }
+
+    .property {
+        width: 45%; /* Adjust the width of property cards for tablets */
+    }
+
+    .modal-content {
+        width: 90%; /* Ensure modal is not too wide on smaller screens */
+    }
+}
+
+/* Media query for mobile devices (max-width 768px) */
+@media (max-width: 768px) {
+    body {
+        background-position: top; /* Adjust background for smaller screens */
+    }
+
+    header {
+        flex-direction: column; /* Stack header items vertically */
+        padding: 15px; /* Reduce padding */
+    }
+
+    nav {
+        flex-direction: column; /* Stack navigation items vertically */
+        gap: 10px; /* Reduce gap between items */
+    }
+
+    .property-list {
+        flex-direction: column; /* Stack property cards */
+        width: 100%; /* Full width on mobile */
+    }
+
+    .property {
+        width: 90%; /* Make property cards fit screen */
+        margin: 10px auto; /* Center property cards */
+    }
+
+    .property img {
+        height: 200px; /* Restrict height of property images */
+        object-fit: cover; /* Ensure the image covers the container without distortion */
+    }
+
+    .modal-content {
+        width: 95%; /* Adjust modal width for mobile */
+    }
+
+    button, input, textarea {
+        font-size: 1.2em; /* Increase font size for touch inputs */
+    }
+}
+
+
+
+
+
+    </style>
+<style type="text/css">
+.property {
+    background-color: #f0f8ff; /* AliceBlue background for properties */
+    border: 1px solid #b0c4de; /* LightSteelBlue border */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensure rounded corners work with overflow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 20px; /* Space between properties */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.property:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.property img {
+    width: 100%; /* Full width for images */
+    height: auto; /* Maintain aspect ratio */
+    border-bottom: 2px solid #4682b4; /* SteelBlue bottom border for images */
+}
+
+.property h3 {
+    color: #4682b4; /* SteelBlue for property titles */
+    font-size: 1.5em; /* Larger font size for titles */
+    margin: 10px 0; /* Margin for spacing */
+    padding: 0 15px; /* Padding for aesthetics */
+}
+
+.property p {
+    font-size: 1.2em; /* Slightly larger font for price */
+    color: #5f9ea0; /* CadetBlue for price text */
+    margin: 0 15px 15px; /* Margin for spacing */
+}
+
+.view-details-btn {
+    background-color: #5f9ea0; /* CadetBlue background for buttons */
+    color: white; /* White text for buttons */
+    padding: 10px; /* Padding for comfort */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1em; /* Font size */
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+    margin: 0 15px 15px; /* Margin for spacing */
+    display: block; /* Block display to fill available width */
+}
+
+.view-details-btn:hover {
+    background-color: #4682b4; /* Change to SteelBlue on hover */
+}
+
+</style>
+
+<style type="text/css">
+
+
+
+
+
+</style>
+
+</head>
+
+
+
+
+<body>
+    <header>
+        <img src="logo.png" alt="Real Estate Logo" class="logo"> <!-- Logo placeholder -->
+          <h1 class="animated-title">Find Your Dream Home Today!</h1>
+
+      
+        <nav>
+            <a href="#search-section"><h2>Featured Properties</h2></a>
+           
+            <a href="#testimonials"><h2>Testimonials</h2></a>
+            <a href="#about-us"><h2>About Us</h2></a>
+            <a href="#contact"><h2>Contact Us</h2></a>
+        </nav>
+    </header>
+
+    <section id="search-section" class="properties"> <!-- Ensure this section has the correct ID -->
+        <h2>Featured Properties</h2>
+        <div class="property-list">
+            <div class="property">
+                <img src="modern.jpg" alt="House 1">
+                <h3>Kilimani Bungalow</h3>
+                <p>Ksh.5.3 Million</p>
+                <button class="view-details-btn" data-features="3 Bedrooms, 2 Bathrooms, Large Backyard, Close to Schools">View Details</button>
+            </div>
+
+              <div class="property">
+                <img src="house1.jpeg" alt="House 1">
+                <h3>Ruaka Courts</h3>
+                <p>Ksh.5 Million</p>
+                <button class="view-details-btn" data-features="3 Bedrooms, 2 Bathrooms, Large Backyard, Close to Schools">View Details</button>
+            </div>
+
+              <div class="property">
+                <img src="model.jpg" alt="House 1">
+                <h3>Umoja Villa</h3>
+                <p>Ksh 1.2 Million</p>
+                <button class="view-details-btn" data-features="3 Bedrooms, 2 Bathrooms, Large Backyard, Close to Schools">View Details</button>
+            </div>
+            <div class="property">
+                <img src="house2.jpeg" alt="House 2">
+                <h3>Modern Apartment</h3>
+                <p>Ksh.350 Million</p>
+                <button class="view-details-btn" data-features="2 Bedrooms, 1 Bathroom, City View, Near Public Transport">View Details</button>
+            </div>
+            <div class="property">
+                <img src="house3.jpeg" alt="House 3">
+                <h3>Cozy Cottage</h3>
+                <p>Ksh.25 Million</p>
+                <button class="view-details-btn" data-features="2 Bedrooms, 1 Bathroom, Quiet Neighborhood, Garden">View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popup Modal -->
+    <div id="property-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="document.getElementById('property-modal').style.display='none';">&times;</span>
+            <h2>Property Features</h2>
+            <ul id="property-features-list"></ul>
+        </div>
+    </div>
+
+  <section id="testimonials" class="testimonials">
+    <h2> 'What Our Clients Say</h2>
+    <div class="testimonial">
+        <img src="customer.png" alt="Client 1" style="width: 100px; height: 100px; border-radius: 50%;"> <!-- Image placeholder for client -->
+        <blockquote><?php echo '"The best real estate agency I\'ve ever worked with! Professional and trustworthy." - Brian Ochieng'; ?></blockquote>
+    </div>
+   
+</section>
+
+
+   <section id="about-us" class="about">
+    <h2>About Us</h2>
+    <p>Welcome to CEO Properties, where your dream home becomes a reality! Founded in 2024, we are a dedicated team of real estate professionals committed to providing exceptional service and personalized solutions to meet your unique needs.</p>
+    <p>At CEO Properties, we understand that buying or selling a home is one of the most significant decisions in your life. That's why we pride ourselves on our in-depth market knowledge, integrity, and unwavering dedication to our clients. Our mission is to guide you through every step of the real estate process, ensuring a smooth and enjoyable experience.</p>
+    <h3>Our Values:</h3>
+    <ul>
+        <li><strong>Integrity:</strong> We believe in honest communication and transparency in all our dealings.</li>
+        <li><strong>Client-Centric Approach:</strong> Your satisfaction is our top priority. We listen to your needs and work tirelessly to exceed your expectations.</li>
+        <li><strong>Expertise:</strong> Our team comprises seasoned professionals with extensive knowledge of the local market, ensuring you have the best insights to make informed decisions.</li>
+        <li><strong>Innovation:</strong> We utilize the latest technology and marketing strategies to maximize exposure for your property and streamline your buying or selling experience.</li>
+    </ul>
+    <p>Whether you are a first-time homebuyer, looking to invest, or ready to sell, CEO Properties is here to help. We invite you to explore our listings, read our client testimonials, and reach out to us for any questions or assistance. Together, let’s make your real estate dreams a reality!</p>
+    <p>Contact us today to learn more about how we can assist you!</p>
+</section>
+
+
+    
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <form id="contact-form" action="process_contact.php" method="POST">
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            <textarea name="message" placeholder="Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Popup Form Modal -->
+    <div id="consultation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="document.getElementById('consultation-modal').style.display='none';">&times;</span>
+            <h2><?php echo 'Get a Free Consultation'; ?></h2>
+            <form id="consultation-form" action="process_consultation.php" method="POST">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="phone" placeholder="Phone Number" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit"><?php echo 'Request Consultation'; ?></button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       // Smooth scrolling to sections
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+       
+   // JavaScript code for modal functionality
+const modal = document.getElementById('property-modal');
+const featuresList = document.getElementById('property-features-list');
+
+// Add event listeners to all "View Details" buttons
+document.querySelectorAll('.view-details-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // Get the features from the button's data attribute
+        const features = button.getAttribute('data-features').split(', ');
+        // Clear the current list
+        featuresList.innerHTML = '';
+        // Add each feature to the list
+        features.forEach(feature => {
+            const li = document.createElement('li');
+            li.textContent = feature;
+            featuresList.appendChild(li);
+        });
+        // Display the modal
+        modal.style.display = 'block';
+    });
+});
+
+// Close the modal when any close button is clicked
+document.querySelectorAll('.close-button').forEach(button => {
+    button.onclick = function() {
+        modal.style.display = 'none';
+    };
+});
+
+// Close the modal when the user clicks outside the modal content
+window.onclick = function(event) {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
+
+</body>
+</html>
